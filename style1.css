@@ -1,0 +1,29 @@
+body {
+  font-family: Arial, sans-serif;
+  max-width: 600px;
+  margin: 30px auto;
+  padding: 0 20px;
+}
+
+h1, h2 {
+  color: #333;
+}
+
+select {
+  width: 100%;
+  padding: 8px;
+  margin: 10px 0 20px;
+  font-size: 16px;
+}
+
+#recommendations {
+  border: 1px solid #ccc;
+  padding: 10px;
+  min-height: 50px;
+  background-color: #f9f9f9;
+}
+
+.recommendation-item {
+  padding: 5px 0;
+  border-bottom: 1px solid #ddd;
+}

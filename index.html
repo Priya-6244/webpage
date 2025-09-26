@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>MovieBox — Recommendations</title>
+    <!-- App styles -->
+    <link rel="stylesheet" href="styles.css" />
+    <!-- Prefers-reduced-motion respected in CSS -->
+</head>
+<body>
+    <!-- Skip link for keyboard users -->
+    <a class="skip-link" href="#main">Skip to main content</a>
+
+    <header class="app-header" role="banner">
+        <div class="container header-content">
+            <h1 class="app-title">MovieBox</h1>
+            <div class="watchlist-summary" aria-live="polite" aria-atomic="true">
+                <button id="watchlistOpenBtn" class="btn btn-ghost" type="button" aria-haspopup="dialog">
+                    Watchlist <span id="watchlistCount" class="badge" aria-label="items in watchlist">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main id="main" class="container" role="main">
+        <!-- Filters/Search -->
+        <section class="filters" aria-labelledby="filters-heading">
+            <h2 id="filters-heading" class="sr-only">Search and Filters</h2>
+            <form id="filterForm" class="filters-form" role="search" aria-label="Movie search and filters">
+                <!-- Title search -->
+                <label class="field" for="searchInput">
+                    <span class="field-label">Search title</span>
+                    <input id="searchInput" name="q" type="search" placeholder="Search movies..." autocomplete="off" />
+                </label>
+
+                <!-- Genre filter (populated via JS) -->
+                <label class="field" for="genreSelect">
+                    <span class="field-label">Genre</span>
+                    <select id="genreSelect" name="genre">
+                        <option value="">All genres</option>
+                    </select>
+                </label>
+
+                <!-- Language filter (populated via JS) -->
+                <label class="field" for="languageSelect">
+                    <span class="field-label">Language</span>
+                    <select id="languageSelect" name="language">
+                        <option value="">All languages</option>
+                    </select>
+                </label>
+
+                <div class="filters-actions">
+                    <button id="clearFiltersBtn" class="btn" type="button">Clear</button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Recommendations -->
+        <section class="section" aria-labelledby="rec-heading">
+            <div class="section-head">
+                <h2 id="rec-heading">Recommended for You</h2>
+                <p class="section-sub">Based on your watchlist</p>
+            </div>
+            <div id="recommendedGrid" class="movie-grid" aria-live="polite"></div>
+        </section>
+
+        <!-- All Movies -->
+        <section class="section" aria-labelledby="all-heading">
+            <div class="section-head">
+                <h2 id="all-heading">All Movies</h2>
+                <p id="resultsCount" class="section-sub" aria-live="polite" aria-atomic="true">0 results</p>
+            </div>
+            <div id="moviesGrid" class="movie-grid"></div>
+        </section>
+    </main>
+
+    <!-- Modal: Movie Details -->
+    <div id="movieModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalDesc" hidden>
+        <div class="modal-backdrop" data-close="true"></div>
+        <div class="modal-dialog" role="document">
+            <button class="modal-close btn-icon" type="button" aria-label="Close details" data-close="true">×</button>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <img id="modalPoster" class="modal-poster" alt="" />
+                    <div class="modal-titles">
+                        <h3 id="modalTitle"></h3>
+                        <p class="meta"><span id="modalGenres"></span> • <span id="modalLanguage"></span> • ⭐ <span id="modalRating"></span></p>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <p id="modalDesc"></p>
+                    <div class="modal-cast">
+                        <h4>Cast</h4>
+                        <ul id="modalCast"></ul>
+                    </div>
+                    <div class="modal-trailer">
+                        <h4>Trailer</h4>
+                        <div class="trailer-embed">
+                            <iframe id="modalTrailer" title="Trailer" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                    <div class="modal-reviews">
+                        <h4>User Reviews</h4>
+                        <ul id="modalReviews"></ul>
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button id="modalWatchlistBtn" class="btn" type="button">Add to Watchlist</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Watchlist quick view -->
+    <div id="watchlistModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="watchlistTitle" hidden>
+        <div class="modal-backdrop" data-close="true"></div>
+        <div class="modal-dialog" role="document">
+            <button class="modal-close btn-icon" type="button" aria-label="Close watchlist" data-close="true">×</button>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-titles">
+                        <h3 id="watchlistTitle">Your Watchlist</h3>
+                        <p class="meta"><span id="watchlistCountDetail">0</span> items</p>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div id="watchlistGrid" class="movie-grid compact"></div>
+                </div>
+                <div class="modal-actions">
+                    <button id="clearWatchlistBtn" class="btn btn-ghost" type="button">Clear Watchlist</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- App script -->
+    <script src="script.js" defer></script>
+</body>
+</html>
+
+
+
